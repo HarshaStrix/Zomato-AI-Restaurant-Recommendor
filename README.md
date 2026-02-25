@@ -1,1 +1,1 @@
-# first-GenAI-project
+# Zomato-AI-Restaurant-Recommendor
