@@ -1,0 +1,9 @@
+# Phase 3: Ranking Weights Configuration
+# Weights sum should ideally equal 1.0 for normalized scores
+
+ranking_weights:
+  rating: 0.4        # Restaurant rating (0-5 scale)
+  price_match: 0.2   # Price range alignment
+  cuisine_match: 0.2 # Cuisine preference match
+  popularity: 0.15   # Review count / popularity
+  proximity: 0.05    # Distance/proximity (when coordinates available)

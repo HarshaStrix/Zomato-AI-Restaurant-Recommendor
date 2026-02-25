@@ -1,0 +1,489 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Zomato-like: light theme, red accent */
+  --bg: #f7f7f7;
+  --bgSoft: #fafafa;
+  --surface: #ffffff;
+  --surface2: #f5f5f5;
+  --surface3: #ebebeb;
+  --text: #1c1c1c;
+  --textMuted: #6b7280;
+  --accent: #e23744;
+  --accentHover: #cb202d;
+  --accentMuted: rgba(226, 55, 68, 0.08);
+  --success: #0d9488;
+  --border: #e5e7eb;
+  --radius: 12px;
+  --radiusSm: 8px;
+  --radiusLg: 16px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadowCard: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lexend', system-ui, sans-serif;
+  background: var(--bgSoft);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.pageWrap {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header – clean, Zomato-style */
+.appHeader {
+  text-align: center;
+  padding: 1.75rem 1rem 1.25rem;
+  width: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.appHeaderTitle {
+  font-size: clamp(1.4rem, 3.5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.appHeaderTitleIcon {
+  display: inline-flex;
+  color: var(--accent);
+}
+
+.appHeaderSubtitle {
+  font-size: 0.9rem;
+  color: var(--textMuted);
+  font-weight: 400;
+}
+
+.highlightBangalore {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.statsCapsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--textMuted);
+}
+
+.statsCapsuleItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.statsIcon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.statsCapsuleDivider {
+  color: var(--border);
+  font-weight: 300;
+}
+
+.container {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radiusLg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadowCard);
+  width: 100%;
+}
+
+.cardSearch {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radiusLg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadowCard);
+  width: 100%;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.formFieldFull {
+  margin-bottom: 1.25rem;
+}
+
+.fieldHint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--textMuted);
+  margin-top: 0.35rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.labelIcon {
+  color: var(--textMuted);
+  flex-shrink: 0;
+}
+
+.select,
+.input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radiusSm);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: 'Lexend', inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ratingInputWrap {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radiusSm);
+  overflow: hidden;
+}
+
+.ratingBtn {
+  width: 2.5rem;
+  flex-shrink: 0;
+  background: var(--surface2);
+  border: none;
+  color: var(--accent);
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.ratingBtn:hover {
+  background: var(--accentMuted);
+}
+
+.ratingInput {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accentMuted);
+}
+
+.btn {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radiusSm);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Lexend', inherit;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--accentHover);
+  box-shadow: 0 4px 12px rgba(226, 55, 68, 0.25);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--textMuted);
+  font-size: 1rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #b91c1c;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radiusSm);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.apiHint {
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: var(--radiusSm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: #b45309;
+}
+
+.apiHint strong {
+  color: var(--text);
+}
+
+.resultsSection {
+  margin-top: 1.5rem;
+}
+
+.resultsSection h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.summaryBox {
+  background: var(--surface2);
+  border-left: 4px solid var(--accent);
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radiusSm) var(--radiusSm) 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--textMuted);
+  line-height: 1.6;
+}
+
+.summaryBoxTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.summaryBoxIcon {
+  color: var(--accent);
+}
+
+.summaryBoxText {
+  margin: 0;
+  color: var(--textMuted);
+  line-height: 1.6;
+}
+
+.resultMeta {
+  font-size: 0.85rem;
+  color: var(--textMuted);
+  margin-bottom: 1rem;
+}
+
+/* Restaurant card – Zomato-style: clean, image left, subtle shadow */
+.restaurantCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radiusLg);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0;
+  min-height: 140px;
+  box-shadow: var(--shadowCard);
+}
+
+.restaurantCard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: var(--surface3);
+}
+
+.restaurantCardImageWrap {
+  position: relative;
+  background: var(--surface2);
+}
+
+.restaurantCardImage {
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.restaurantCardRating {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  box-shadow: var(--shadow);
+}
+
+.restaurantCardBody {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.restaurantCardBody h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.restaurantMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--textMuted);
+  margin-bottom: 0.5rem;
+}
+
+.restaurantMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem; /* Standard gap for most items */
+}
+
+.restaurantMeta span.priceMeta {
+  gap: 0.1rem; /* Tight gap specifically for the Rupee symbol and amount */
+}
+
+.restaurantMeta .metaIcon {
+  color: var(--textMuted);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.rating {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .restaurantCard {
+    grid-template-columns: 1fr;
+  }
+  .restaurantCardImageWrap {
+    min-height: 160px;
+  }
+  .restaurantCardImage {
+    min-height: 160px;
+  }
+}
+
+.explanation {
+  font-size: 0.875rem;
+  color: var(--textMuted);
+  line-height: 1.55;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.noResults {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--textMuted);
+  font-size: 1rem;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: var(--textMuted);
+  width: 100%;
+}
+
+.footerPowered {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}

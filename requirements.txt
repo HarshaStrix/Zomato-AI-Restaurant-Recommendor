@@ -1,0 +1,17 @@
+# Phase 1: Data Ingestion & Preprocessing
+datasets>=2.14.0
+pandas>=2.0.0
+pytest>=7.0.0
+
+# Phase 2: Backend REST API
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+httpx>=0.25.0
+python-dotenv>=1.0.0
+
+# Phase 3: Recommendation & Ranking Engine
+pyyaml>=6.0
+
+# Phase 4: LLM Integration (Groq)
+groq>=0.4.0

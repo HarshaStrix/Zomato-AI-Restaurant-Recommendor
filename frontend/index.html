@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Recommendations | AI-Powered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a1f;
+      --surface2: #25252d;
+      --text: #e8e8ed;
+      --textMuted: #9898a6;
+      --accent: #f59e0b;
+      --accentHover: #fbbf24;
+      --success: #22c55e;
+      --border: #2d2d36;
+      --radius: 12px;
+      --radiusSm: 8px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .subtitle { color: var(--textMuted); font-size: 0.95rem; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--textMuted);
+      margin-bottom: 0.35rem;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radiusSm);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+    button {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radiusSm);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: var(--accentHover); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--textMuted);
+    }
+    .loading::after {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 20px;
+      margin-left: 0.5rem;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 1rem;
+      border-radius: var(--radiusSm);
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .summary-box {
+      background: var(--surface2);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radiusSm) var(--radiusSm) 0;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--textMuted);
+    }
+    .summary-box strong { color: var(--text); }
+    .result-meta {
+      font-size: 0.85rem;
+      color: var(--textMuted);
+      margin-bottom: 1rem;
+    }
+    .restaurant-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radiusSm);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .restaurant-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.35rem;
+    }
+    .restaurant-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--textMuted);
+      margin-bottom: 0.75rem;
+    }
+    .restaurant-meta span { display: inline-flex; align-items: center; gap: 0.25rem; }
+    .rating { color: var(--accent); font-weight: 600; }
+    .explanation {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.55;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: var(--textMuted);
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--textMuted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Restaurant Recommendations</h1>
+      <p class="subtitle">AI-powered suggestions from Phase 1 data</p>
+    </header>
+
+    <div class="card">
+      <form id="recommendForm">
+        <div class="form-grid">
+          <div>
+            <label for="location">Location</label>
+            <select id="location" name="location" required>
+              <option value="">Loading…</option>
+            </select>
+          </div>
+          <div>
+            <label for="cuisine">Cuisine</label>
+            <select id="cuisine" name="cuisine">
+              <option value="">Any</option>
+            </select>
+          </div>
+          <div>
+            <label for="priceMin">Price (min)</label>
+            <select id="priceMin" name="priceMin">
+              <option value="">Any</option>
+              <option value="1">1 – Budget</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4 – Premium</option>
+            </select>
+          </div>
+          <div>
+            <label for="priceMax">Price (max)</label>
+            <select id="priceMax" name="priceMax">
+              <option value="">Any</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <div>
+            <label for="minRating">Min rating</label>
+            <input type="number" id="minRating" name="minRating" min="0" max="5" step="0.1" placeholder="0">
+          </div>
+        </div>
+        <button type="submit" id="submitBtn">Get recommendations</button>
+      </form>
+    </div>
+
+    <div id="results" class="card" style="display: none;">
+      <div id="resultsContent"></div>
+    </div>
+
+    <footer>
+      Data from Hugging Face Zomato dataset · Recommendations by Phase 3 · Explanations by Groq (Phase 4)
+    </footer>
+  </div>
+
+  <script>
+    const API_BASE = ''; // same origin
+    const optionsUrl = API_BASE + '/api/v1/recommend/options';
+    const recommendUrl = API_BASE + '/api/v1/recommend';
+
+    const locationSelect = document.getElementById('location');
+    const cuisineSelect = document.getElementById('cuisine');
+    const form = document.getElementById('recommendForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultsCard = document.getElementById('results');
+    const resultsContent = document.getElementById('resultsContent');
+
+    async function loadOptions() {
+      try {
+        const r = await fetch(optionsUrl);
+        if (!r.ok) throw new Error('Options failed');
+        const data = await r.json();
+        locationSelect.innerHTML = '<option value="">Select location</option>' +
+          (data.locations || []).map(l => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('');
+        cuisineSelect.innerHTML = '<option value="">Any cuisine</option>' +
+          (data.cuisines || []).map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      } catch (e) {
+        locationSelect.innerHTML = '<option value="">Error loading options</option>';
+        console.error(e);
+      }
+    }
+
+    function escapeHtml(s) {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const location = locationSelect.value?.trim();
+      if (!location) return;
+      submitBtn.disabled = true;
+      resultsCard.style.display = 'block';
+      resultsContent.innerHTML = '<div class="loading">Getting recommendations</div>';
+
+      try {
+        const body = {
+          location: { place: location },
+          limit: 5,
+        };
+        if (cuisineSelect.value) body.cuisine = cuisineSelect.value;
+        const priceMin = document.getElementById('priceMin').value;
+        const priceMax = document.getElementById('priceMax').value;
+        if (priceMin || priceMax) {
+          body.price_range = {};
+          if (priceMin) body.price_range.min = parseInt(priceMin, 10);
+          if (priceMax) body.price_range.max = parseInt(priceMax, 10);
+        }
+        const minRating = document.getElementById('minRating').value;
+        if (minRating !== '' && minRating != null) body.minimum_rating = parseFloat(minRating);
+
+        const r = await fetch(recommendUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await r.json();
+
+        if (!r.ok) {
+          resultsContent.innerHTML = `<div class="error">${escapeHtml(data.detail || data.message || 'Request failed')}</div>`;
+          return;
+        }
+
+        const recs = data.data?.recommendations || [];
+        const summary = data.data?.summary || {};
+        const aiExplanation = summary.ai_explanation || '';
+
+        let html = '';
+        if (summary.total_found !== undefined) {
+          html += `<p class="result-meta">Found ${summary.total_found} restaurant(s), showing ${summary.returned}.</p>`;
+        }
+        if (aiExplanation) {
+          html += `<div class="summary-box"><strong>Summary</strong><br>${escapeHtml(aiExplanation)}</div>`;
+        }
+        if (recs.length === 0) {
+          html += '<div class="no-results">No restaurants match your filters. Try different options.</div>';
+        } else {
+          recs.forEach(rec => {
+            html += `
+              <div class="restaurant-card">
+                <h3>${escapeHtml(rec.name)}</h3>
+                <div class="restaurant-meta">
+                  <span>📍 ${escapeHtml(rec.location)}</span>
+                  <span>🍽 ${escapeHtml(rec.cuisine)}</span>
+                  <span class="rating">★ ${rec.rating}</span>
+                  ${rec.price_range != null ? `<span>💰 ${rec.price_range}/4</span>` : ''}
+                  ${rec.review_count != null ? `<span>(${rec.review_count} reviews)</span>` : ''}
+                </div>
+                ${rec.explanation ? `<div class="explanation">${escapeHtml(rec.explanation)}</div>` : ''}
+              </div>`;
+          });
+        }
+        resultsContent.innerHTML = html;
+      } catch (err) {
+        resultsContent.innerHTML = `<div class="error">${escapeHtml(err.message)}</div>`;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    loadOptions();
+  </script>
+</body>
+</html>
