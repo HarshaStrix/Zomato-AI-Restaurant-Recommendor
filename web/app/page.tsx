@@ -7,7 +7,7 @@ import FilterForm from './components/FilterForm';
 import RestaurantResults from './components/RestaurantResults';
 import Footer from './components/Footer';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:8000' : '');
 
 export default function Home() {
   const [options, setOptions] = useState<Options | null>(null);
@@ -112,40 +112,40 @@ export default function Home() {
 
       <main className="container">
         <FilterForm
-        options={options}
-        optionsError={optionsError}
-        location={location}
-        setLocation={setLocation}
-        cuisine={cuisine}
-        setCuisine={setCuisine}
-        priceTier={priceTier}
-        setPriceTier={setPriceTier}
-        minRating={minRating}
-        setMinRating={setMinRating}
-        naturalLanguageQuery={naturalLanguageQuery}
-        setNaturalLanguageQuery={setNaturalLanguageQuery}
-        onSubmit={handleSubmit}
-        loading={loading}
-      />
+          options={options}
+          optionsError={optionsError}
+          location={location}
+          setLocation={setLocation}
+          cuisine={cuisine}
+          setCuisine={setCuisine}
+          priceTier={priceTier}
+          setPriceTier={setPriceTier}
+          minRating={minRating}
+          setMinRating={setMinRating}
+          naturalLanguageQuery={naturalLanguageQuery}
+          setNaturalLanguageQuery={setNaturalLanguageQuery}
+          onSubmit={handleSubmit}
+          loading={loading}
+        />
 
-      {loading && (
-        <div className="card">
-          <div className="loading">
-            <span className="spinner" />
-            Fetching recommendations…
+        {loading && (
+          <div className="card">
+            <div className="loading">
+              <span className="spinner" />
+              Fetching recommendations…
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {submitError && !loading && (
-        <div className="card">
-          <div className="error">{submitError}</div>
-        </div>
-      )}
+        {submitError && !loading && (
+          <div className="card">
+            <div className="error">{submitError}</div>
+          </div>
+        )}
 
-      {recommendations !== null && !loading && (
-        <RestaurantResults recommendations={recommendations} summary={summary} />
-      )}
+        {recommendations !== null && !loading && (
+          <RestaurantResults recommendations={recommendations} summary={summary} />
+        )}
 
         <Footer />
       </main>
