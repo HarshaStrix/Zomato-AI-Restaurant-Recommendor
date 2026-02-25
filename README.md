@@ -25,9 +25,14 @@ An intelligent restaurant recommendation system for Bangalore, powered by determ
    pip install -r requirements.txt
    ```
 3. Run the application:
-   ```bash
-   ./run-app.sh
-   ```
+   - **Recommended (Full Stack)**:
+     ```bash
+     ./run-app.sh
+     ```
+   - **Streamlit Version (Quick Deployment)**:
+     ```bash
+     streamlit run streamlit_app.py
+     ```
 
 ## Architecture
 See [ARCHITECTURE.md](ARCHITECTURE.md) for a detailed breakdown of the system layers and implementation phases.
